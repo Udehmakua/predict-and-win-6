@@ -46,10 +46,10 @@
   --radius: 0.75rem;
 
   /* Brand palette */
-  --navy: oklch(0.21 0.13 268);          /* #001041 */
-  --navy-deep: oklch(0.15 0.10 268);     /* darker navy for layers */
-  --brand-yellow: oklch(0.86 0.18 92);   /* #FFC400 */
-  --brand-cyan: oklch(0.92 0.14 196);    /* #1AFFFF */
+  --navy: #001041;
+  --navy-deep: #000829;
+  --brand-yellow: #FFC400;
+  --brand-cyan: #FFC400;
 
   --background: var(--navy);
   --foreground: oklch(0.98 0 0);

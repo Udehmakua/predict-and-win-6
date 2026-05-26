@@ -75,5 +75,5 @@ export const WEEKLY_MATCHES: Match[] = [
   },
 ];
 
-// Sunday 23:59 of the current campaign week
-export const WEEKLY_DEADLINE = "2026-06-21T23:59:00Z";
+// Campaign countdown end date
+export const WEEKLY_DEADLINE = "2026-06-11T23:59:00Z";
