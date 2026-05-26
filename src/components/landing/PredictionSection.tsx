@@ -7,22 +7,8 @@ import {
   CURRENT_YEAR,
   type Outcome,
 } from "@/lib/campaign-config";
-import { submitPredictions, checkSubmission } from "@/lib/predictions.functions";
+import { Flag } from "./Flag";
 
-const codeFor = (name: string) =>
-  ({
-    Brazil: "BR",
-    Argentina: "AR",
-    France: "FR",
-    Germany: "DE",
-    England: "EN",
-    Spain: "ES",
-    Nigeria: "NG",
-    Portugal: "PT",
-    Netherlands: "NL",
-    Italy: "IT",
-    Morocco: "MA",
-  } as Record<string, string>)[name] ?? name.slice(0, 2).toUpperCase();
 
 const fmtKick = (iso: string) => {
   const d = new Date(iso);
