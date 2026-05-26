@@ -7,7 +7,9 @@ import {
   CURRENT_YEAR,
   type Outcome,
 } from "@/lib/campaign-config";
+import { submitPredictions, checkSubmission } from "@/lib/predictions.functions";
 import { Flag } from "./Flag";
+
 
 
 const fmtKick = (iso: string) => {
