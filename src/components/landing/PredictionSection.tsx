@@ -8,21 +8,9 @@ import {
   type Outcome,
 } from "@/lib/campaign-config";
 import { submitPredictions, checkSubmission } from "@/lib/predictions.functions";
+import { Flag } from "./Flag";
 
-const codeFor = (name: string) =>
-  ({
-    Brazil: "BR",
-    Argentina: "AR",
-    France: "FR",
-    Germany: "DE",
-    England: "EN",
-    Spain: "ES",
-    Nigeria: "NG",
-    Portugal: "PT",
-    Netherlands: "NL",
-    Italy: "IT",
-    Morocco: "MA",
-  } as Record<string, string>)[name] ?? name.slice(0, 2).toUpperCase();
+
 
 const fmtKick = (iso: string) => {
   const d = new Date(iso);
@@ -158,26 +146,23 @@ export function PredictionSection() {
                 </div>
 
                 <div className="mt-3 grid grid-cols-3 items-center">
-                  <div>
-                    <div className="font-display text-3xl font-black sm:text-4xl">
-                      {codeFor(m.home)}
-                    </div>
-                    <div className="mt-1 text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+                  <div className="flex items-center gap-3">
+                    <Flag country={m.home} className="h-7 w-10 shrink-0 sm:h-8 sm:w-12" />
+                    <div className="text-[11px] font-bold uppercase tracking-wider sm:text-sm">
                       {m.home}
                     </div>
                   </div>
                   <div className="text-center font-display text-sm font-bold uppercase tracking-widest text-muted-foreground">
                     vs
                   </div>
-                  <div className="text-right">
-                    <div className="font-display text-3xl font-black sm:text-4xl">
-                      {codeFor(m.away)}
-                    </div>
-                    <div className="mt-1 text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+                  <div className="flex items-center justify-end gap-3">
+                    <div className="text-right text-[11px] font-bold uppercase tracking-wider sm:text-sm">
                       {m.away}
                     </div>
+                    <Flag country={m.away} className="h-7 w-10 shrink-0 sm:h-8 sm:w-12" />
                   </div>
                 </div>
+
 
                 <div className="mt-4 grid grid-cols-3 gap-2">
                   {(
