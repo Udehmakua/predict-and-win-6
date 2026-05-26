@@ -46,10 +46,10 @@
   --radius: 0.75rem;
 
   /* Brand palette */
-  --navy: oklch(0.21 0.13 268);          /* #001041 */
-  --navy-deep: oklch(0.15 0.10 268);     /* darker navy for layers */
-  --brand-yellow: oklch(0.86 0.18 92);   /* #FFC400 */
-  --brand-cyan: oklch(0.92 0.14 196);    /* #1AFFFF */
+  --navy: #001041;
+  --navy-deep: #000829;
+  --brand-yellow: #FFC400;
+  --brand-cyan: #FFC400;
 
   --background: var(--navy);
   --foreground: oklch(0.98 0 0);
@@ -93,16 +93,13 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: var(--brand-yellow);
 
-  /* Brand gradients & glows */
-  --gradient-hero:
-    radial-gradient(ellipse at top, color-mix(in oklab, var(--brand-yellow) 18%, transparent), transparent 60%),
-    radial-gradient(ellipse at bottom right, color-mix(in oklab, var(--brand-cyan) 14%, transparent), transparent 60%),
-    linear-gradient(180deg, var(--navy-deep) 0%, var(--navy) 100%);
-  --gradient-yellow: linear-gradient(135deg, oklch(0.92 0.18 95) 0%, var(--brand-yellow) 100%);
-  --gradient-cyan: linear-gradient(135deg, var(--brand-cyan) 0%, oklch(0.78 0.16 210) 100%);
-  --shadow-glow-yellow: 0 0 40px -8px color-mix(in oklab, var(--brand-yellow) 60%, transparent);
-  --shadow-glow-cyan: 0 0 40px -8px color-mix(in oklab, var(--brand-cyan) 60%, transparent);
-  --shadow-card: 0 12px 40px -16px oklch(0 0 0 / 0.6);
+  /* Brand surfaces (solid, no gradients) */
+  --gradient-hero: var(--navy);
+  --gradient-yellow: var(--brand-yellow);
+  --gradient-cyan: var(--brand-yellow);
+  --shadow-glow-yellow: 0 0 32px -10px color-mix(in oklab, var(--brand-yellow) 60%, transparent);
+  --shadow-glow-cyan: 0 0 32px -10px color-mix(in oklab, var(--brand-yellow) 60%, transparent);
+  --shadow-card: 0 12px 40px -16px rgb(0 0 0 / 0.6);
 }
 
 .dark {
@@ -140,18 +137,9 @@
   }
   .animate-pulse-glow { animation: pulse-glow 2s ease-out infinite; }
 
-  @keyframes shine {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
   }
-  .animate-shine {
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      color-mix(in oklab, var(--brand-yellow) 40%, transparent) 50%,
-      transparent 100%
-    );
-    background-size: 200% 100%;
-    animation: shine 3s linear infinite;
-  }
+  .animate-marquee { animation: marquee 30s linear infinite; }
 }
