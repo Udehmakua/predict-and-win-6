@@ -35,8 +35,10 @@ function LandingPage() {
       <Marquee />
       <LockInBanner />
       <HowItWorks />
+      <BetNowCta />
       {PREDICTIONS_ENABLED ? <PredictionSection /> : <PredictionsClosed />}
       <TieBreaker />
+      <BetNowCta />
       <StreakRewards />
       <LeaderboardSection />
       <SiteFooter />
