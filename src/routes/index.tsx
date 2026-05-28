@@ -44,7 +44,31 @@ function LandingPage() {
       <SiteFooter />
     </main>
   );
+/* ---------- Bet Now CTA Band ---------- */
+function BetNowCta() {
+  return (
+    <section className="px-4 py-10">
+      <div className="mx-auto max-w-5xl rounded-2xl border border-yellow/40 bg-navy-deep p-6 text-center sm:p-10">
+        <h3 className="font-display text-3xl font-black uppercase leading-tight text-foreground sm:text-4xl">
+          Ready To Win? <span className="text-yellow">Place Your Bet.</span>
+        </h3>
+        <p className="mx-auto mt-3 max-w-md text-sm text-muted-foreground">
+          Stake ₦100,000 this week to qualify for the ₦10,000,000 prize pool.
+        </p>
+        <a
+          href="https://m.betking.com/en-ng"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-6 inline-block rounded-md bg-yellow px-8 py-4 font-display text-base font-extrabold uppercase tracking-wider text-primary-foreground transition-transform hover:scale-105"
+        >
+          Bet Now
+        </a>
+      </div>
+    </section>
+  );
 }
+
+/* ---------- Header ---------- */
 
 /* ---------- Header ---------- */
 function SiteHeader() {
