@@ -57,8 +57,37 @@ export const submitPredictions = createServerFn({ method: "POST" })
       return { success: false as const, error: "Could not save predictions. Try again." };
     }
 
+    // Mirror write to external Supabase (best-effort; don't fail user submission)
+    const extUrl = process.env.EXTERNAL_SUPABASE_URL;
+    const extKey = process.env.EXTERNAL_SUPABASE_SERVICE_ROLE_KEY;
+    if (extUrl && extKey) {
+      try {
+        const res = await fetch(`${extUrl}/rest/v1/predictions`, {
+          method: "POST",
+          headers: {
+            apikey: extKey,
+            Authorization: `Bearer ${extKey}`,
+            "Content-Type": "application/json",
+            Prefer: "return=minimal",
+          },
+          body: JSON.stringify({
+            user_id: data.userId,
+            week_number: data.weekNumber,
+            year: data.year,
+            predictions: data.predictions,
+          }),
+        });
+        if (!res.ok) {
+          console.error("External mirror failed:", res.status, await res.text());
+        }
+      } catch (e) {
+        console.error("External mirror error:", e);
+      }
+    }
+
     return { success: true as const };
   });
+
 
 export const checkSubmission = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) =>
