@@ -59,10 +59,12 @@ function SiteHeader() {
           <a href="#streak" className="text-muted-foreground hover:text-yellow">Rewards</a>
         </nav>
         <a
-          href="#predict"
+          href="https://m.betking.com/en-ng"
+          target="_blank"
+          rel="noopener noreferrer"
           className="rounded-md bg-yellow px-4 py-2 text-xs font-extrabold uppercase tracking-wider text-primary-foreground transition-transform hover:scale-105"
         >
-          Predict
+          Bet Now
         </a>
       </div>
     </header>
