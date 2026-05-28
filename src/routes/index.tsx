@@ -44,6 +44,8 @@ function LandingPage() {
       <SiteFooter />
     </main>
   );
+}
+
 /* ---------- Bet Now CTA Band ---------- */
 function BetNowCta() {
   return (
