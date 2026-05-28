@@ -71,8 +71,7 @@ function BetNowCta() {
 }
 
 /* ---------- Header ---------- */
-
-/* ---------- Header ---------- */
+function SiteHeader() {
 function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-navy-deep/90 backdrop-blur-md">
