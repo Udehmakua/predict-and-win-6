@@ -73,12 +73,14 @@ function SiteHeader() {
 function Hero() {
   return (
     <section id="top" className="relative isolate overflow-hidden bg-navy">
-      <div
-        className="absolute inset-0 -z-10 opacity-40"
-        style={{
-          backgroundImage: `url(${heroImage})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
+        <a
+          href="https://m.betking.com/en-ng"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="rounded-md bg-yellow px-4 py-2 text-xs font-extrabold uppercase tracking-wider text-primary-foreground transition-transform hover:scale-105"
+        >
+          Bet Now
+        </a>
         }}
       />
       <div className="absolute inset-0 -z-10 bg-navy/70" />
