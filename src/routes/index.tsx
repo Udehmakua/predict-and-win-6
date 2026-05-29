@@ -11,6 +11,8 @@ import { PREDICTIONS_ENABLED, WEEKLY_DEADLINE } from "@/lib/campaign-config";
 import { Countdown } from "@/components/landing/Countdown";
 import { PredictionSection } from "@/components/landing/PredictionSection";
 import { LeaderboardSection } from "@/components/landing/LeaderboardSection";
+import { FAQSection } from "@/components/landing/FAQSection";
+import { TermsSection } from "@/components/landing/TermsSection";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -41,6 +43,8 @@ function LandingPage() {
       <BetNowCta />
       <StreakRewards />
       <LeaderboardSection />
+      <FAQSection />
+      <TermsSection />
       <SiteFooter />
     </main>
   );
@@ -83,6 +87,8 @@ function SiteHeader() {
           <a href="#predict" className="text-muted-foreground hover:text-yellow">Predict</a>
           <a href="#leaderboard" className="text-muted-foreground hover:text-yellow">Leaderboard</a>
           <a href="#streak" className="text-muted-foreground hover:text-yellow">Rewards</a>
+          <a href="#faq" className="text-muted-foreground hover:text-yellow">FAQ</a>
+          <a href="#terms" className="text-muted-foreground hover:text-yellow">Terms</a>
         </nav>
         <a
           href="https://m.betking.com/en-ng"

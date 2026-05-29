@@ -30,10 +30,23 @@ export function PredictionSection() {
   const [picks, setPicks] = useState<Record<string, Outcome>>({});
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [now, setNow] = useState(() => Date.now());
+
+  // Tick every second so the section auto-locks at the first kickoff.
+  useEffect(() => {
+    const id = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  // First match kickoff — when this passes, the whole section locks.
+  const firstKickoff = Math.min(
+    ...WEEKLY_MATCHES.map((m) => new Date(m.kickoff).getTime()),
+  );
+  const kickedOff = now >= firstKickoff;
+  const sectionLocked = submitted || kickedOff;
 
   const validId = /^[0-9]{4,20}$/.test(userId);
   const allPicked = WEEKLY_MATCHES.every((m) => picks[m.id]);
-  const now = Date.now();
   const madeCount = Object.keys(picks).length;
 
   const handlePick = (matchId: string, pick: Outcome, locked: boolean) => {
@@ -131,7 +144,7 @@ export function PredictionSection() {
         {/* Matches */}
         <div className="mt-6 grid gap-3">
           {WEEKLY_MATCHES.map((m, i) => {
-            const locked = new Date(m.kickoff).getTime() <= now || submitted;
+            const locked = sectionLocked;
             const pick = picks[m.id];
             return (
               <article
@@ -205,10 +218,16 @@ export function PredictionSection() {
           <button
             type="button"
             onClick={handleSubmit}
-            disabled={submitting || submitted || !validId || !allPicked}
+            disabled={submitting || sectionLocked || !validId || !allPicked}
             className="w-full max-w-md rounded-md bg-yellow px-8 py-4 font-display text-base font-extrabold uppercase tracking-wide text-primary-foreground transition-transform hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
           >
-            {submitting ? "Submitting…" : submitted ? "Predictions Locked" : "Submit Predictions"}
+            {submitting
+              ? "Submitting…"
+              : submitted
+                ? "Predictions Locked"
+                : kickedOff
+                  ? "Predictions Closed — Matches Started"
+                  : "Submit Predictions"}
           </button>
           {!validId && userId.length > 0 && (
             <p className="text-xs text-destructive">User ID must be digits (4–20).</p>
