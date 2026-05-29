@@ -87,8 +87,6 @@ function SiteHeader() {
           <a href="#predict" className="text-muted-foreground hover:text-yellow">Predict</a>
           <a href="#leaderboard" className="text-muted-foreground hover:text-yellow">Leaderboard</a>
           <a href="#streak" className="text-muted-foreground hover:text-yellow">Rewards</a>
-          <a href="#faq" className="text-muted-foreground hover:text-yellow">FAQ</a>
-          <a href="#terms" className="text-muted-foreground hover:text-yellow">Terms</a>
         </nav>
         <a
           href="https://m.betking.com/en-ng"

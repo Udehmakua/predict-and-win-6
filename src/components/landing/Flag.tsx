@@ -32,7 +32,7 @@ const FLAGS: Record<string, FlagDef> = {
   Paraguay: { dir: "h", stripes: [{ c: "#D52B1E" }, { c: "#FFFFFF" }, { c: "#0038A8" }] },
   "Ivory Coast": { dir: "v", stripes: [{ c: "#FF8200" }, { c: "#FFFFFF" }, { c: "#009E60" }] },
   Ecuador: { dir: "h", stripes: [{ c: "#FFDD00", w: 2 }, { c: "#034EA2", w: 1 }, { c: "#ED1C24", w: 1 }] },
-  Tunisia: { dir: "h", stripes: [{ c: "#E70013" }] },
+  
 };
 
 const CUSTOM_FLAGS: Record<string, () => React.ReactElement> = {
