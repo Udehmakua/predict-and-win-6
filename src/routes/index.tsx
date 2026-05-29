@@ -11,6 +11,8 @@ import { PREDICTIONS_ENABLED, WEEKLY_DEADLINE } from "@/lib/campaign-config";
 import { Countdown } from "@/components/landing/Countdown";
 import { PredictionSection } from "@/components/landing/PredictionSection";
 import { LeaderboardSection } from "@/components/landing/LeaderboardSection";
+import { FAQSection } from "@/components/landing/FAQSection";
+import { TermsSection } from "@/components/landing/TermsSection";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -41,6 +43,8 @@ function LandingPage() {
       <BetNowCta />
       <StreakRewards />
       <LeaderboardSection />
+      <FAQSection />
+      <TermsSection />
       <SiteFooter />
     </main>
   );
