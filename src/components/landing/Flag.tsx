@@ -71,6 +71,18 @@ const CUSTOM_FLAGS: Record<string, () => React.ReactElement> = {
       <rect y="8.5" width="30" height="3" fill="#FECC00" />
     </svg>
   ),
+  Tunisia: () => (
+    <svg viewBox="0 0 30 20" preserveAspectRatio="none" className="h-full w-full">
+      <rect width="30" height="20" fill="#E70013" />
+      <circle cx="15" cy="10" r="5" fill="#FFFFFF" />
+      <circle cx="16" cy="10" r="3.2" fill="#E70013" />
+      <circle cx="17" cy="10" r="2.6" fill="#FFFFFF" />
+      <polygon
+        fill="#E70013"
+        points="17,8 17.6,9.6 19.2,9.6 17.9,10.6 18.4,12.2 17,11.2 15.6,12.2 16.1,10.6 14.8,9.6 16.4,9.6"
+      />
+    </svg>
+  ),
 };
 
 export function Flag({ country, className = "" }: { country: string; className?: string }) {
