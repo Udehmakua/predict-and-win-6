@@ -30,10 +30,23 @@ export function PredictionSection() {
   const [picks, setPicks] = useState<Record<string, Outcome>>({});
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [now, setNow] = useState(() => Date.now());
+
+  // Tick every second so the section auto-locks at the first kickoff.
+  useEffect(() => {
+    const id = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  // First match kickoff — when this passes, the whole section locks.
+  const firstKickoff = Math.min(
+    ...WEEKLY_MATCHES.map((m) => new Date(m.kickoff).getTime()),
+  );
+  const kickedOff = now >= firstKickoff;
+  const sectionLocked = submitted || kickedOff;
 
   const validId = /^[0-9]{4,20}$/.test(userId);
   const allPicked = WEEKLY_MATCHES.every((m) => picks[m.id]);
-  const now = Date.now();
   const madeCount = Object.keys(picks).length;
 
   const handlePick = (matchId: string, pick: Outcome, locked: boolean) => {
