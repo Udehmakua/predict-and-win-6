@@ -218,10 +218,16 @@ export function PredictionSection() {
           <button
             type="button"
             onClick={handleSubmit}
-            disabled={submitting || submitted || !validId || !allPicked}
+            disabled={submitting || sectionLocked || !validId || !allPicked}
             className="w-full max-w-md rounded-md bg-yellow px-8 py-4 font-display text-base font-extrabold uppercase tracking-wide text-primary-foreground transition-transform hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
           >
-            {submitting ? "Submitting…" : submitted ? "Predictions Locked" : "Submit Predictions"}
+            {submitting
+              ? "Submitting…"
+              : submitted
+                ? "Predictions Locked"
+                : kickedOff
+                  ? "Predictions Closed — Matches Started"
+                  : "Submit Predictions"}
           </button>
           {!validId && userId.length > 0 && (
             <p className="text-xs text-destructive">User ID must be digits (4–20).</p>
