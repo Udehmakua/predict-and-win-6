@@ -144,7 +144,7 @@ export function PredictionSection() {
         {/* Matches */}
         <div className="mt-6 grid gap-3">
           {WEEKLY_MATCHES.map((m, i) => {
-            const locked = new Date(m.kickoff).getTime() <= now || submitted;
+            const locked = sectionLocked;
             const pick = picks[m.id];
             return (
               <article
