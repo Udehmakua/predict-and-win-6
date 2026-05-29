@@ -11,6 +11,8 @@
  *    `away` value in `src/lib/campaign-config.ts`.
  */
 
+import type React from "react";
+
 type Stripe = { c: string; w?: number };
 type FlagDef = { dir: "h" | "v"; stripes: Stripe[] };
 
@@ -33,7 +35,7 @@ const FLAGS: Record<string, FlagDef> = {
   Tunisia: { dir: "h", stripes: [{ c: "#E70013" }] },
 };
 
-const CUSTOM_FLAGS: Record<string, () => JSX.Element> = {
+const CUSTOM_FLAGS: Record<string, () => React.ReactElement> = {
   Japan: () => (
     <svg viewBox="0 0 30 20" preserveAspectRatio="none" className="h-full w-full">
       <rect width="30" height="20" fill="#FFFFFF" />
