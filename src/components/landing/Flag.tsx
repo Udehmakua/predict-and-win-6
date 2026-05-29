@@ -32,7 +32,7 @@ const FLAGS: Record<string, FlagDef> = {
   Paraguay: { dir: "h", stripes: [{ c: "#D52B1E" }, { c: "#FFFFFF" }, { c: "#0038A8" }] },
   "Ivory Coast": { dir: "v", stripes: [{ c: "#FF8200" }, { c: "#FFFFFF" }, { c: "#009E60" }] },
   Ecuador: { dir: "h", stripes: [{ c: "#FFDD00", w: 2 }, { c: "#034EA2", w: 1 }, { c: "#ED1C24", w: 1 }] },
-  Tunisia: { dir: "h", stripes: [{ c: "#E70013" }] },
+  
 };
 
 const CUSTOM_FLAGS: Record<string, () => React.ReactElement> = {
@@ -69,6 +69,18 @@ const CUSTOM_FLAGS: Record<string, () => React.ReactElement> = {
       <rect width="30" height="20" fill="#006AA7" />
       <rect x="9" width="3" height="20" fill="#FECC00" />
       <rect y="8.5" width="30" height="3" fill="#FECC00" />
+    </svg>
+  ),
+  Tunisia: () => (
+    <svg viewBox="0 0 30 20" preserveAspectRatio="none" className="h-full w-full">
+      <rect width="30" height="20" fill="#E70013" />
+      <circle cx="15" cy="10" r="5" fill="#FFFFFF" />
+      <circle cx="16" cy="10" r="3.2" fill="#E70013" />
+      <circle cx="17" cy="10" r="2.6" fill="#FFFFFF" />
+      <polygon
+        fill="#E70013"
+        points="17,8 17.6,9.6 19.2,9.6 17.9,10.6 18.4,12.2 17,11.2 15.6,12.2 16.1,10.6 14.8,9.6 16.4,9.6"
+      />
     </svg>
   ),
 };
