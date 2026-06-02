@@ -98,34 +98,52 @@ function SiteHeader() {
   );
 }
 
-/* ---------- Hero ---------- */
+/* ---------- Hero ----------
+ * HOW TO CHANGE THE BACKGROUND IMAGE:
+ *  1. Drop your new image into `src/assets/` (e.g. `src/assets/my-hero.jpg`).
+ *  2. At the top of this file, change the import:
+ *       import heroImage from "@/assets/my-hero.jpg";
+ *  3. To tweak how dark / visible it is, adjust the two values below:
+ *       - `opacity-70`        → image visibility (higher = more visible)
+ *       - `bg-black/50`       → black overlay strength (higher = darker)
+ */
 function Hero() {
   return (
-    <section id="top" className="relative isolate overflow-hidden bg-navy">
+    <section id="top" className="relative isolate overflow-hidden bg-black">
       <div
-        className="absolute inset-0 -z-10 opacity-40"
+        className="absolute inset-0 -z-10 opacity-70"
         style={{
           backgroundImage: `url(${heroImage})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       />
-      <div className="absolute inset-0 -z-10 bg-navy/70" />
-      <div className="absolute inset-0 -z-10 bg-navy/70" />
+      {/* Black overlay (was navy) */}
+      <div className="absolute inset-0 -z-10 bg-black/60" />
+      <div
+        className="absolute inset-0 -z-10"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.85) 100%)",
+        }}
+      />
 
       <div className="mx-auto max-w-6xl px-4 py-16 sm:py-24">
-        <h1 className="font-display text-5xl font-black uppercase leading-[0.95] sm:text-7xl md:text-8xl">
+        <p className="font-[family-name:var(--font-subtle)] text-xs font-bold uppercase tracking-[0.3em] text-yellow">
+          VIP · World Cup 2026
+        </p>
+        <h1 className="mt-3 font-display text-5xl font-black uppercase leading-[0.95] sm:text-7xl md:text-8xl">
           Predict &amp; Win
           <br />
-          <span className="text-yellow">The World Cup</span>
+          <span className="text-yellow">₦10,000,000</span>
         </h1>
 
-        <p className="mt-5 max-w-xl text-sm text-muted-foreground sm:text-base">
-          Predict 5 major World Cup matches every week and stand a chance to
-          share from <span className="font-bold text-foreground">₦10,000,000</span> every week.
+        <p className="mt-5 max-w-xl font-[family-name:var(--font-subtle)] text-sm text-muted-foreground sm:text-base">
+          Predict 5 major World Cup matches every week and share from a
+          <span className="font-bold text-foreground"> ₦10M </span>weekly pool.
         </p>
 
-        <div className="mt-7 flex flex-wrap gap-3">
+        <div className="mt-7 flex flex-wrap items-center gap-3">
           <a
             href="#predict"
             className="rounded-md bg-yellow px-6 py-3 font-display text-sm font-extrabold uppercase tracking-wider text-primary-foreground transition-transform hover:scale-105"
@@ -136,8 +154,16 @@ function Hero() {
             href="#leaderboard"
             className="rounded-md border-2 border-yellow px-6 py-3 font-display text-sm font-extrabold uppercase tracking-wider text-foreground transition-colors hover:bg-yellow hover:text-primary-foreground"
           >
-            View Leaderboard
+            Leaderboard
           </a>
+        </div>
+
+        {/* Inline countdown — replaces the old standalone Lock-In banner */}
+        <div className="mt-8 inline-flex flex-col gap-2 rounded-xl border border-yellow/30 bg-black/60 px-5 py-4 backdrop-blur-sm">
+          <span className="font-[family-name:var(--font-subtle)] text-[10px] font-bold uppercase tracking-[0.25em] text-yellow">
+            Predictions close in
+          </span>
+          <Countdown target={WEEKLY_DEADLINE} />
         </div>
 
         <div className="mt-10 grid max-w-2xl grid-cols-2 gap-3 sm:grid-cols-4">
