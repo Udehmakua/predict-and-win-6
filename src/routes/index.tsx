@@ -193,29 +193,6 @@ function Marquee() {
   );
 }
 
-/* ---------- Lock-in banner (countdown) ---------- */
-function LockInBanner() {
-  return (
-    <section className="px-4 py-10">
-      <div className="mx-auto max-w-5xl rounded-2xl border border-yellow/30 bg-card p-6 sm:p-8">
-        <div className="grid items-center gap-6 md:grid-cols-[1fr_auto]">
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-yellow">
-              Prediction Deadline
-            </p>
-            <h3 className="mt-2 font-display text-3xl font-black uppercase leading-tight sm:text-4xl">
-              Lock In Before Kickoff
-            </h3>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Predictions close when the first match begins. Don't miss this week's pool.
-            </p>
-          </div>
-          <Countdown target={WEEKLY_DEADLINE} />
-        </div>
-      </div>
-    </section>
-  );
-}
 
 /* ---------- How it works ---------- */
 function HowItWorks() {
