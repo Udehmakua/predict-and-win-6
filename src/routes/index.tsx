@@ -291,7 +291,7 @@ function StreakRewards() {
   return (
     <section id="streak" className="scroll-mt-20 bg-navy px-4 py-16 sm:py-20">
       <div className="mx-auto max-w-3xl text-center">
-        <p className="text-xs font-bold uppercase tracking-[0.2em] text-yellow">
+        <p className="font-bold uppercase tracking-[0.2em] text-yellow text-3xl">
           Streak Bonus · Extra ₦100,000
         </p>
         <h2 className="mt-3 font-display text-4xl font-black uppercase leading-[0.95] sm:text-6xl">
