@@ -35,12 +35,9 @@ function LandingPage() {
       <SiteHeader />
       <Hero />
       <Marquee />
-      <LockInBanner />
       <HowItWorks />
-      <BetNowCta />
       {PREDICTIONS_ENABLED ? <PredictionSection /> : <PredictionsClosed />}
       <TieBreaker />
-      <BetNowCta />
       <StreakRewards />
       <LeaderboardSection />
       <FAQSection />
@@ -51,28 +48,9 @@ function LandingPage() {
 }
 
 /* ---------- Bet Now CTA Band ---------- */
-function BetNowCta() {
-  return (
-    <section className="px-4 py-10">
-      <div className="mx-auto max-w-5xl rounded-2xl border border-yellow/40 bg-navy-deep p-6 text-center sm:p-10">
-        <h3 className="font-display text-3xl font-black uppercase leading-tight text-foreground sm:text-4xl">
-          Ready To Win? <span className="text-yellow">Place Your Bet.</span>
-        </h3>
-        <p className="mx-auto mt-3 max-w-md text-sm text-muted-foreground">
-          Stake ₦100,000 this week to qualify for the ₦10,000,000 prize pool.
-        </p>
-        <a
-          href="https://m.betking.com/en-ng"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-6 inline-block rounded-md bg-yellow px-8 py-4 font-display text-base font-extrabold uppercase tracking-wider text-primary-foreground transition-transform hover:scale-105"
-        >
-          Bet Now
-        </a>
-      </div>
-    </section>
-  );
-}
+/* (Removed) BetNowCta + LockInBanner — countdown is now inline in the hero
+ * and the standalone "Bet Now" panels were repetitive. */
+
 
 /* ---------- Header ---------- */
 function SiteHeader() {
@@ -101,34 +79,52 @@ function SiteHeader() {
   );
 }
 
-/* ---------- Hero ---------- */
+/* ---------- Hero ----------
+ * HOW TO CHANGE THE BACKGROUND IMAGE:
+ *  1. Drop your new image into `src/assets/` (e.g. `src/assets/my-hero.jpg`).
+ *  2. At the top of this file, change the import:
+ *       import heroImage from "@/assets/my-hero.jpg";
+ *  3. To tweak how dark / visible it is, adjust the two values below:
+ *       - `opacity-70`        → image visibility (higher = more visible)
+ *       - `bg-black/50`       → black overlay strength (higher = darker)
+ */
 function Hero() {
   return (
-    <section id="top" className="relative isolate overflow-hidden bg-navy">
+    <section id="top" className="relative isolate overflow-hidden bg-black">
       <div
-        className="absolute inset-0 -z-10 opacity-40"
+        className="absolute inset-0 -z-10 opacity-70"
         style={{
           backgroundImage: `url(${heroImage})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       />
-      <div className="absolute inset-0 -z-10 bg-navy/70" />
-      <div className="absolute inset-0 -z-10 bg-navy/70" />
+      {/* Black overlay (was navy) */}
+      <div className="absolute inset-0 -z-10 bg-black/60" />
+      <div
+        className="absolute inset-0 -z-10"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.85) 100%)",
+        }}
+      />
 
       <div className="mx-auto max-w-6xl px-4 py-16 sm:py-24">
-        <h1 className="font-display text-5xl font-black uppercase leading-[0.95] sm:text-7xl md:text-8xl">
+        <p className="font-[family-name:var(--font-subtle)] text-xs font-bold uppercase tracking-[0.3em] text-yellow">
+          VIP · World Cup 2026
+        </p>
+        <h1 className="mt-3 font-display text-5xl font-black uppercase leading-[0.95] sm:text-7xl md:text-8xl">
           Predict &amp; Win
           <br />
-          <span className="text-yellow">The World Cup</span>
+          <span className="text-yellow">₦10,000,000</span>
         </h1>
 
-        <p className="mt-5 max-w-xl text-sm text-muted-foreground sm:text-base">
-          Predict 5 major World Cup matches every week and stand a chance to
-          share from <span className="font-bold text-foreground">₦10,000,000</span> every week.
+        <p className="mt-5 max-w-xl font-[family-name:var(--font-subtle)] text-sm text-muted-foreground sm:text-base">
+          Predict 5 major World Cup matches every week and share from a
+          <span className="font-bold text-foreground"> ₦10M </span>weekly pool.
         </p>
 
-        <div className="mt-7 flex flex-wrap gap-3">
+        <div className="mt-7 flex flex-wrap items-center gap-3">
           <a
             href="#predict"
             className="rounded-md bg-yellow px-6 py-3 font-display text-sm font-extrabold uppercase tracking-wider text-primary-foreground transition-transform hover:scale-105"
@@ -139,8 +135,16 @@ function Hero() {
             href="#leaderboard"
             className="rounded-md border-2 border-yellow px-6 py-3 font-display text-sm font-extrabold uppercase tracking-wider text-foreground transition-colors hover:bg-yellow hover:text-primary-foreground"
           >
-            View Leaderboard
+            Leaderboard
           </a>
+        </div>
+
+        {/* Inline countdown — replaces the old standalone Lock-In banner */}
+        <div className="mt-8 inline-flex flex-col gap-2 rounded-xl border border-yellow/30 bg-black/60 px-5 py-4 backdrop-blur-sm">
+          <span className="font-[family-name:var(--font-subtle)] text-[10px] font-bold uppercase tracking-[0.25em] text-yellow">
+            Predictions close in
+          </span>
+          <Countdown target={WEEKLY_DEADLINE} />
         </div>
 
         <div className="mt-10 grid max-w-2xl grid-cols-2 gap-3 sm:grid-cols-4">
@@ -189,29 +193,6 @@ function Marquee() {
   );
 }
 
-/* ---------- Lock-in banner (countdown) ---------- */
-function LockInBanner() {
-  return (
-    <section className="px-4 py-10">
-      <div className="mx-auto max-w-5xl rounded-2xl border border-yellow/30 bg-card p-6 sm:p-8">
-        <div className="grid items-center gap-6 md:grid-cols-[1fr_auto]">
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-yellow">
-              Prediction Deadline
-            </p>
-            <h3 className="mt-2 font-display text-3xl font-black uppercase leading-tight sm:text-4xl">
-              Lock In Before Kickoff
-            </h3>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Predictions close when the first match begins. Don't miss this week's pool.
-            </p>
-          </div>
-          <Countdown target={WEEKLY_DEADLINE} />
-        </div>
-      </div>
-    </section>
-  );
-}
 
 /* ---------- How it works ---------- */
 function HowItWorks() {
@@ -348,20 +329,6 @@ function StreakRewards() {
           + ₦100,000 Bonus Unlocked At W3
         </div>
 
-        <div className="mt-8 grid gap-3 sm:grid-cols-3">
-          {[
-            "Weekly Cash Pool",
-            "+₦100,000 at 3-Week Streak",
-            "Top 100 Share The Pot Every Week",
-          ].map((t) => (
-            <div
-              key={t}
-              className="rounded-md border border-yellow/30 bg-card px-4 py-3 text-xs font-bold uppercase tracking-wider text-foreground"
-            >
-              {t}
-            </div>
-          ))}
-        </div>
       </div>
     </section>
   );

@@ -12,15 +12,30 @@ import { Flag } from "./Flag";
 
 
 
-const fmtKick = (iso: string) => {
-  const d = new Date(iso);
-  const day = d.toLocaleDateString("en-US", { weekday: "short" });
-  const time = d.toLocaleTimeString("en-GB", {
+const fmtTime = (iso: string) =>
+  new Date(iso).toLocaleTimeString("en-GB", {
     hour: "2-digit",
     minute: "2-digit",
   });
-  return `${day} ${time}`;
-};
+
+const fmtDayHeader = (iso: string) =>
+  new Date(iso).toLocaleDateString("en-GB", {
+    weekday: "long",
+    day: "numeric",
+    month: "short",
+  });
+
+// Group matches by calendar day (BetKing-style date headers)
+function groupByDay<T extends { kickoff: string }>(matches: T[]) {
+  const groups: { label: string; items: T[] }[] = [];
+  for (const m of matches) {
+    const label = fmtDayHeader(m.kickoff);
+    const last = groups[groups.length - 1];
+    if (last && last.label === label) last.items.push(m);
+    else groups.push({ label, items: [m] });
+  }
+  return groups;
+}
 
 export function PredictionSection() {
   const submit = useServerFn(submitPredictions);
@@ -141,77 +156,93 @@ export function PredictionSection() {
           )}
         </div>
 
-        {/* Matches */}
-        <div className="mt-6 grid gap-3">
-          {WEEKLY_MATCHES.map((m, i) => {
-            const locked = sectionLocked;
-            const pick = picks[m.id];
-            return (
-              <article
-                key={m.id}
-                className={`rounded-xl border bg-card p-4 sm:p-5 ${
-                  pick ? "border-yellow" : "border-border"
-                } ${locked ? "opacity-60" : ""}`}
-              >
-                <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-[0.2em]">
-                  <span className="text-muted-foreground">Match {i + 1}</span>
-                  <span className="text-yellow">{fmtKick(m.kickoff)}</span>
+        {/* Matches — BetKing-style feed grouped by day */}
+        <div className="mt-6 overflow-hidden rounded-xl border border-border bg-card">
+          {groupByDay(WEEKLY_MATCHES).map((group) => (
+            <div key={group.label}>
+              {/* Day header */}
+              <div className="flex items-center justify-between bg-secondary px-4 py-2.5">
+                <span className="font-[family-name:var(--font-subtle)] text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  {group.label}
+                </span>
+                <div className="flex w-[150px] justify-around text-xs font-bold text-muted-foreground sm:w-[180px]">
+                  <span>1</span>
+                  <span>X</span>
+                  <span>2</span>
                 </div>
+              </div>
 
-                <div className="mt-3 grid grid-cols-3 items-center">
-                  <div className="flex items-center gap-3">
-                    <Flag country={m.home} className="h-7 w-10 shrink-0 sm:h-8 sm:w-12" />
-                    <div className="text-[11px] font-bold uppercase tracking-wider sm:text-sm">
-                      {m.home}
-                    </div>
-                  </div>
-                  <div className="text-center font-display text-sm font-bold uppercase tracking-widest text-muted-foreground">
-                    vs
-                  </div>
-                  <div className="flex items-center justify-end gap-3">
-                    <div className="text-right text-[11px] font-bold uppercase tracking-wider sm:text-sm">
-                      {m.away}
-                    </div>
-                    <Flag country={m.away} className="h-7 w-10 shrink-0 sm:h-8 sm:w-12" />
-                  </div>
-                </div>
-
-
-                <div className="mt-4 grid grid-cols-3 gap-2">
-                  {(
-                    [
-                      { v: "HOME", label: m.home, sub: "Home" },
-                      { v: "DRAW", label: "X", sub: "Draw" },
-                      { v: "AWAY", label: m.away, sub: "Away" },
-                    ] as { v: Outcome; label: string; sub: string }[]
-                  ).map((opt) => {
-                    const active = pick === opt.v;
-                    return (
-                      <button
-                        key={opt.v}
-                        type="button"
-                        disabled={locked}
-                        onClick={() => handlePick(m.id, opt.v, locked)}
-                        className={`rounded-md border px-2 py-3 text-center transition-colors ${
-                          active
-                            ? "border-yellow bg-yellow text-primary-foreground"
-                            : "border-border bg-navy-deep text-foreground hover:border-yellow/60"
-                        } ${locked ? "cursor-not-allowed" : "cursor-pointer"}`}
+              {group.items.map((m) => {
+                const locked = sectionLocked;
+                const pick = picks[m.id];
+                return (
+                  <div
+                    key={m.id}
+                    className={`flex items-center gap-3 border-t border-border px-3 py-3 sm:px-4 ${
+                      locked ? "opacity-60" : ""
+                    }`}
+                  >
+                    {/* Stats icon + time */}
+                    <div className="flex flex-col items-center gap-1 pr-1">
+                      <svg
+                        viewBox="0 0 16 16"
+                        className="size-4 text-yellow"
+                        fill="currentColor"
                       >
-                        <div className="text-[9px] font-semibold uppercase tracking-widest opacity-70">
-                          {opt.sub}
-                        </div>
-                        <div className="mt-1 text-sm font-extrabold uppercase">
-                          {opt.label}
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-              </article>
-            );
-          })}
+                        <rect x="1" y="9" width="3" height="6" />
+                        <rect x="6.5" y="5" width="3" height="10" />
+                        <rect x="12" y="1" width="3" height="14" />
+                      </svg>
+                      <span className="font-[family-name:var(--font-subtle)] text-[10px] font-semibold text-muted-foreground">
+                        {fmtTime(m.kickoff)}
+                      </span>
+                    </div>
+
+                    {/* Teams (stacked, BetKing style) */}
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-2">
+                        <Flag country={m.home} className="h-3.5 w-5 shrink-0" />
+                        <span className="truncate text-sm font-semibold text-foreground">
+                          {m.home}
+                        </span>
+                      </div>
+                      <div className="mt-1 flex items-center gap-2">
+                        <Flag country={m.away} className="h-3.5 w-5 shrink-0" />
+                        <span className="truncate text-sm font-semibold text-foreground">
+                          {m.away}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* 1 / X / 2 buttons */}
+                    <div className="flex w-[150px] shrink-0 gap-1.5 sm:w-[180px]">
+                      {(["HOME", "DRAW", "AWAY"] as Outcome[]).map((v) => {
+                        const active = pick === v;
+                        const label = v === "HOME" ? "1" : v === "DRAW" ? "X" : "2";
+                        return (
+                          <button
+                            key={v}
+                            type="button"
+                            disabled={locked}
+                            onClick={() => handlePick(m.id, v, locked)}
+                            className={`flex-1 rounded-md py-2.5 text-center text-sm font-bold transition-colors ${
+                              active
+                                ? "bg-yellow text-primary-foreground"
+                                : "bg-secondary text-foreground hover:bg-yellow/20"
+                            } ${locked ? "cursor-not-allowed" : "cursor-pointer"}`}
+                          >
+                            {label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          ))}
         </div>
+
 
         {/* Submit */}
         <div className="mt-8 flex flex-col items-center gap-3">
