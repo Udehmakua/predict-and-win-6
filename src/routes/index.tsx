@@ -35,12 +35,9 @@ function LandingPage() {
       <SiteHeader />
       <Hero />
       <Marquee />
-      <LockInBanner />
       <HowItWorks />
-      <BetNowCta />
       {PREDICTIONS_ENABLED ? <PredictionSection /> : <PredictionsClosed />}
       <TieBreaker />
-      <BetNowCta />
       <StreakRewards />
       <LeaderboardSection />
       <FAQSection />
