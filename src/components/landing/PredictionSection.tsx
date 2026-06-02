@@ -12,15 +12,30 @@ import { Flag } from "./Flag";
 
 
 
-const fmtKick = (iso: string) => {
-  const d = new Date(iso);
-  const day = d.toLocaleDateString("en-US", { weekday: "short" });
-  const time = d.toLocaleTimeString("en-GB", {
+const fmtTime = (iso: string) =>
+  new Date(iso).toLocaleTimeString("en-GB", {
     hour: "2-digit",
     minute: "2-digit",
   });
-  return `${day} ${time}`;
-};
+
+const fmtDayHeader = (iso: string) =>
+  new Date(iso).toLocaleDateString("en-GB", {
+    weekday: "long",
+    day: "numeric",
+    month: "short",
+  });
+
+// Group matches by calendar day (BetKing-style date headers)
+function groupByDay<T extends { kickoff: string }>(matches: T[]) {
+  const groups: { label: string; items: T[] }[] = [];
+  for (const m of matches) {
+    const label = fmtDayHeader(m.kickoff);
+    const last = groups[groups.length - 1];
+    if (last && last.label === label) last.items.push(m);
+    else groups.push({ label, items: [m] });
+  }
+  return groups;
+}
 
 export function PredictionSection() {
   const submit = useServerFn(submitPredictions);
