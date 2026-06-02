@@ -329,20 +329,6 @@ function StreakRewards() {
           + ₦100,000 Bonus Unlocked At W3
         </div>
 
-        <div className="mt-8 grid gap-3 sm:grid-cols-3">
-          {[
-            "Weekly Cash Pool",
-            "+₦100,000 at 3-Week Streak",
-            "Top 100 Share The Pot Every Week",
-          ].map((t) => (
-            <div
-              key={t}
-              className="rounded-md border border-yellow/30 bg-card px-4 py-3 text-xs font-bold uppercase tracking-wider text-foreground"
-            >
-              {t}
-            </div>
-          ))}
-        </div>
       </div>
     </section>
   );
