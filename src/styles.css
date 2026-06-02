@@ -46,9 +46,9 @@
 :root {
   --radius: 0.75rem;
 
-  /* Brand palette */
-  --navy: #001041;
-  --navy-deep: #000829;
+  /* Brand palette — VIP black + yellow */
+  --navy: #000000;
+  --navy-deep: #000000;
   --brand-yellow: #FFC400;
   --brand-cyan: #FFC400;
 
