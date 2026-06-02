@@ -239,8 +239,8 @@ function TieBreaker() {
     <section className="bg-yellow px-4 py-16 text-primary-foreground sm:py-20">
       <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-2 md:items-center">
         <div>
-          <p className="text-xs font-bold uppercase tracking-[0.2em]">Tie-Breaker Rule</p>
-          <h2 className="mt-2 font-display text-4xl font-black uppercase leading-[0.95] sm:text-6xl">
+          <p className="font-bold uppercase tracking-[0.2em] text-yellow text-3xl">Tie-Breaker Rule</p>
+          <h2 className="mt-2 font-display font-black uppercase leading-[0.95] sm:text-6xl text-lg">
             Stake Higher.
             <br />
             Rank Higher.
