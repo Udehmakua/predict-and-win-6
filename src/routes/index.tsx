@@ -111,7 +111,7 @@ function Hero() {
 
       <div className="mx-auto max-w-6xl px-4 py-16 sm:py-24">
         <p className="font-[family-name:var(--font-subtle)] text-xs font-bold uppercase tracking-[0.3em] text-yellow">
-          VIP · World Cup 2026
+          {"\u200B"}
         </p>
         <h1 className="mt-3 font-display text-5xl font-black uppercase leading-[0.95] sm:text-7xl md:text-8xl">
           Predict &amp; Win
@@ -205,15 +205,15 @@ function HowItWorks() {
   return (
     <section id="how" className="scroll-mt-20 px-4 py-16 sm:py-20">
       <div className="mx-auto max-w-5xl">
-        <p className="text-xs font-bold uppercase tracking-[0.2em] text-yellow">How it works</p>
-        <h2 className="mt-2 font-display text-4xl font-black uppercase leading-[0.95] sm:text-6xl">
+        <p className="font-bold uppercase tracking-[0.2em] text-yellow text-3xl">How it works</p>
+        <h2 className="mt-2 font-display font-black uppercase leading-[0.95] sm:text-6xl text-xl">
           Four Steps To ₦10M
         </h2>
         <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {steps.map((s, i) => (
             <div key={s.t} className="rounded-xl border border-yellow/20 bg-card p-5">
               <div className="font-display text-xs font-bold uppercase tracking-[0.2em] text-yellow">
-                Step {String(i + 1).padStart(2, "0")}
+                {"\n"}
               </div>
               <h3 className="mt-2 font-display text-lg font-extrabold uppercase">{s.t}</h3>
               <p className="mt-2 text-sm text-muted-foreground">{s.d}</p>
