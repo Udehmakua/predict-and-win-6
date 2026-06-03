@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
 import {
@@ -8,6 +8,7 @@ import {
   type Outcome,
 } from "@/lib/campaign-config";
 import { submitPredictions, checkSubmission } from "@/lib/predictions.functions";
+import { validateBetkingUserId } from "@/lib/user-id-validation";
 import { Flag } from "./Flag";
 
 
@@ -60,7 +61,9 @@ export function PredictionSection() {
   const kickedOff = now >= firstKickoff;
   const sectionLocked = submitted || kickedOff;
 
-  const validId = /^[0-9]{4,20}$/.test(userId);
+  const validation = useMemo(() => validateBetkingUserId(userId), [userId]);
+  const validId = validation.ok;
+  const validityReason = validation.ok ? null : validation.reason;
   const allPicked = WEEKLY_MATCHES.every((m) => picks[m.id]);
   const madeCount = Object.keys(picks).length;
 
@@ -88,7 +91,7 @@ export function PredictionSection() {
   }, [userId, validId, check]);
 
   const handleSubmit = async () => {
-    if (!validId) return toast.error("Enter a valid BetKing User ID (digits only)");
+    if (!validId) return toast.error(validityReason ?? "Enter a valid BetKing User ID");
     if (!allPicked) return toast.error("Make a pick for every match");
     setSubmitting(true);
     try {
@@ -260,8 +263,8 @@ export function PredictionSection() {
                   ? "Predictions Closed — Matches Started"
                   : "Submit Predictions"}
           </button>
-          {!validId && userId.length > 0 && (
-            <p className="text-xs text-destructive">User ID must be digits (4–20).</p>
+          {!validId && userId.length > 0 && validityReason && (
+            <p className="text-xs text-destructive">{validityReason}</p>
           )}
           <p className="max-w-md text-center text-xs text-muted-foreground">
             By submitting, you agree to the campaign T&amp;Cs. Stake at least

@@ -1,12 +1,18 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import { validateBetkingUserId } from "@/lib/user-id-validation";
+
+const userIdSchema = z
+  .string()
+  .trim()
+  .superRefine((val, ctx) => {
+    const r = validateBetkingUserId(val);
+    if (!r.ok) ctx.addIssue({ code: z.ZodIssueCode.custom, message: r.reason });
+  });
 
 const submitSchema = z.object({
-  userId: z
-    .string()
-    .trim()
-    .regex(/^[0-9]{4,20}$/, "User ID must be 4-20 digits"),
+  userId: userIdSchema,
   weekNumber: z.number().int().min(1).max(53),
   year: z.number().int().min(2024).max(2100),
   predictions: z
@@ -65,7 +71,7 @@ export const checkSubmission = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) =>
     z
       .object({
-        userId: z.string().regex(/^[0-9]{4,20}$/),
+        userId: userIdSchema,
         weekNumber: z.number().int(),
         year: z.number().int(),
       })
