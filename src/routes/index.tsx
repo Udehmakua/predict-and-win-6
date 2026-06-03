@@ -195,10 +195,10 @@ function HowItWorks() {
   return (
     <section id="how" className="scroll-mt-20 px-4 py-16 sm:py-20">
       <div className="mx-auto max-w-5xl">
-        <p className="font-bold uppercase tracking-[0.2em] text-yellow text-3xl">How it works</p>
-        <h2 className="mt-2 font-display font-black uppercase leading-[0.95] sm:text-6xl text-xl">
+        <h2 className="font-display font-black uppercase leading-[0.95] text-4xl sm:text-6xl">
           Four Steps To ₦10M
         </h2>
+
         <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {steps.map((s, i) => (
             <div key={s.t} className="rounded-xl border border-yellow/20 bg-card p-5">
