@@ -89,13 +89,10 @@ function SiteHeader() {
 function Hero() {
   return (
     <section id="top" className="relative isolate overflow-hidden bg-black">
-      <div
-        className="absolute inset-0 -z-10"
-        style={{
-          backgroundImage: `url(${heroImage})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
+      <img
+        src={heroImage}
+        alt=""
+        className="absolute inset-0 -z-10 h-full w-full object-contain sm:object-cover"
       />
 
 
