@@ -61,7 +61,9 @@ export function PredictionSection() {
   const kickedOff = now >= firstKickoff;
   const sectionLocked = submitted || kickedOff;
 
-  const validId = /^[0-9]{4,20}$/.test(userId);
+  const validation = useMemo(() => validateBetkingUserId(userId), [userId]);
+  const validId = validation.ok;
+  const validityReason = validation.ok ? null : validation.reason;
   const allPicked = WEEKLY_MATCHES.every((m) => picks[m.id]);
   const madeCount = Object.keys(picks).length;
 
