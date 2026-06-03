@@ -107,6 +107,7 @@ const FOOTNOTES: { title: string; body: string }[] = [
   },
 ];
 
+
 export function TermsSection() {
   return (
     <section
