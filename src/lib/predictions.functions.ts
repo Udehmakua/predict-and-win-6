@@ -71,7 +71,7 @@ export const checkSubmission = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) =>
     z
       .object({
-        userId: z.string().regex(/^[0-9]{4,20}$/),
+        userId: userIdSchema,
         weekNumber: z.number().int(),
         year: z.number().int(),
       })
