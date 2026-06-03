@@ -63,9 +63,7 @@ const TERMS: Clause[] = [
       "Streak Reward Mechanic: Customers who submit correct predictions for three (3) consecutive campaign weeks will be eligible to receive an additional ₦100,000 Streak Bonus. Streak Bonus is credited as cash and must be wagered once before any withdrawal.",
     ],
   },
-];
-
-const FOOTNOTES: { title: string; body: string }[] = [
+  
   {
     title: "Entry Requirement",
     body:
@@ -107,6 +105,7 @@ const FOOTNOTES: { title: string; body: string }[] = [
   },
 ];
 
+
 export function TermsSection() {
   return (
     <section
@@ -114,10 +113,7 @@ export function TermsSection() {
       className="scroll-mt-20 border-t border-border bg-navy-deep px-4 py-16 sm:py-20"
     >
       <div className="mx-auto max-w-3xl">
-        <p className="text-xs font-bold uppercase tracking-[0.2em] text-yellow">
-          Legal
-        </p>
-        <h2 className="mt-2 font-display text-4xl font-black uppercase leading-[0.95] sm:text-5xl">
+        <h2 className="font-display text-4xl font-black uppercase leading-[0.95] sm:text-5xl">
           Terms &amp; Conditions
         </h2>
         <p className="mt-4 text-sm text-muted-foreground">
@@ -149,16 +145,8 @@ export function TermsSection() {
             </li>
           ))}
         </ol>
-
-        <div className="mt-10 space-y-4 border-t border-border pt-8">
-          {FOOTNOTES.map((f, i) => (
-            <div key={i} className="text-sm leading-relaxed text-muted-foreground">
-              <span className="font-bold text-foreground">{f.title}: </span>
-              {f.body}
-            </div>
-          ))}
-        </div>
       </div>
+
     </section>
   );
 }

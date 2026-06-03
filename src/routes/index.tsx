@@ -195,10 +195,10 @@ function HowItWorks() {
   return (
     <section id="how" className="scroll-mt-20 px-4 py-16 sm:py-20">
       <div className="mx-auto max-w-5xl">
-        <p className="font-bold uppercase tracking-[0.2em] text-yellow text-3xl">How it works</p>
-        <h2 className="mt-2 font-display font-black uppercase leading-[0.95] sm:text-6xl text-xl">
+        <h2 className="font-display font-black uppercase leading-[0.95] text-4xl sm:text-6xl">
           Four Steps To ₦10M
         </h2>
+
         <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {steps.map((s, i) => (
             <div key={s.t} className="rounded-xl border border-yellow/20 bg-card p-5">
@@ -229,12 +229,12 @@ function TieBreaker() {
     <section className="bg-yellow px-4 py-16 text-primary-foreground sm:py-20">
       <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-2 md:items-center">
         <div>
-          <p className="font-bold uppercase tracking-[0.2em] text-yellow text-3xl">Tie-Breaker Rule</p>
-          <h2 className="mt-2 font-display font-black uppercase leading-[0.95] sm:text-6xl text-lg">
+          <h2 className="font-display font-black uppercase leading-[0.95] text-4xl sm:text-6xl">
             Stake Higher.
             <br />
             Rank Higher.
           </h2>
+
           <p className="mt-4 max-w-md text-sm font-medium">
             When multiple players tie on correct predictions, those with the
             higher total qualifying stake claim the top spots in the Top 100.
@@ -281,14 +281,12 @@ function StreakRewards() {
   return (
     <section id="streak" className="scroll-mt-20 bg-navy px-4 py-16 sm:py-20">
       <div className="mx-auto max-w-3xl text-center">
-        <p className="font-bold uppercase tracking-[0.2em] text-yellow text-3xl">
-          Streak Bonus · Extra ₦100,000
-        </p>
-        <h2 className="mt-3 font-display text-4xl font-black uppercase leading-[0.95] sm:text-6xl">
+        <h2 className="font-display text-4xl font-black uppercase leading-[0.95] sm:text-6xl">
           Correct Predictions
           <br />
           <span className="text-yellow">3 Weeks In A Row?</span>
         </h2>
+
         <p className="mx-auto mt-4 max-w-lg text-sm text-muted-foreground sm:text-base">
           Predict correctly 3 weeks in a row and pocket an extra ₦100,000 on
           top of your weekly winnings.
