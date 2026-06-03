@@ -229,12 +229,12 @@ function TieBreaker() {
     <section className="bg-yellow px-4 py-16 text-primary-foreground sm:py-20">
       <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-2 md:items-center">
         <div>
-          <p className="font-bold uppercase tracking-[0.2em] text-yellow text-3xl">Tie-Breaker Rule</p>
-          <h2 className="mt-2 font-display font-black uppercase leading-[0.95] sm:text-6xl text-lg">
+          <h2 className="font-display font-black uppercase leading-[0.95] text-4xl sm:text-6xl">
             Stake Higher.
             <br />
             Rank Higher.
           </h2>
+
           <p className="mt-4 max-w-md text-sm font-medium">
             When multiple players tie on correct predictions, those with the
             higher total qualifying stake claim the top spots in the Top 100.
