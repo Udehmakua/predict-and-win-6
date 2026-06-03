@@ -84,30 +84,20 @@ function SiteHeader() {
  *  1. Drop your new image into `src/assets/` (e.g. `src/assets/my-hero.jpg`).
  *  2. At the top of this file, change the import:
  *       import heroImage from "@/assets/my-hero.jpg";
- *  3. To tweak how dark / visible it is, adjust the two values below:
- *       - `opacity-70`        → image visibility (higher = more visible)
- *       - `bg-black/50`       → black overlay strength (higher = darker)
+ *  The image is shown at full opacity — no dark overlay.
  */
 function Hero() {
   return (
     <section id="top" className="relative isolate overflow-hidden bg-black">
       <div
-        className="absolute inset-0 -z-10 opacity-70"
+        className="absolute inset-0 -z-10"
         style={{
           backgroundImage: `url(${heroImage})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       />
-      {/* Black overlay (was navy) */}
-      <div className="absolute inset-0 -z-10 bg-black/60" />
-      <div
-        className="absolute inset-0 -z-10"
-        style={{
-          background:
-            "linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.85) 100%)",
-        }}
-      />
+
 
       <div className="mx-auto max-w-6xl px-4 py-16 sm:py-24">
         <p className="font-[family-name:var(--font-subtle)] text-xs font-bold uppercase tracking-[0.3em] text-yellow">

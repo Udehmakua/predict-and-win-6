@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
 import {
@@ -8,6 +8,7 @@ import {
   type Outcome,
 } from "@/lib/campaign-config";
 import { submitPredictions, checkSubmission } from "@/lib/predictions.functions";
+import { validateBetkingUserId } from "@/lib/user-id-validation";
 import { Flag } from "./Flag";
 
 
