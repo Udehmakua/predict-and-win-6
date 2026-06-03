@@ -63,8 +63,7 @@ const TERMS: Clause[] = [
       "Streak Reward Mechanic: Customers who submit correct predictions for three (3) consecutive campaign weeks will be eligible to receive an additional ₦100,000 Streak Bonus. Streak Bonus is credited as cash and must be wagered once before any withdrawal.",
     ],
   },
-  ,
-const FOOTNOTES_UNUSED: never[] = [
+  
   {
     title: "Entry Requirement",
     body:
