@@ -91,7 +91,7 @@ export function PredictionSection() {
   }, [userId, validId, check]);
 
   const handleSubmit = async () => {
-    if (!validId) return toast.error("Enter a valid BetKing User ID (digits only)");
+    if (!validId) return toast.error(validityReason ?? "Enter a valid BetKing User ID");
     if (!allPicked) return toast.error("Make a pick for every match");
     setSubmitting(true);
     try {
