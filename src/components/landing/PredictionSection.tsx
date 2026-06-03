@@ -263,8 +263,8 @@ export function PredictionSection() {
                   ? "Predictions Closed — Matches Started"
                   : "Submit Predictions"}
           </button>
-          {!validId && userId.length > 0 && (
-            <p className="text-xs text-destructive">User ID must be digits (4–20).</p>
+          {!validId && userId.length > 0 && validityReason && (
+            <p className="text-xs text-destructive">{validityReason}</p>
           )}
           <p className="max-w-md text-center text-xs text-muted-foreground">
             By submitting, you agree to the campaign T&amp;Cs. Stake at least
