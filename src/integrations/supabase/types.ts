@@ -16,7 +16,9 @@ export type Database = {
     Tables: {
       predictions: {
         Row: {
+          first_name: string | null
           id: string
+          last_name: string | null
           predictions: Json
           submitted_at: string
           user_id: string
@@ -24,7 +26,9 @@ export type Database = {
           year: number
         }
         Insert: {
+          first_name?: string | null
           id?: string
+          last_name?: string | null
           predictions: Json
           submitted_at?: string
           user_id: string
@@ -32,7 +36,9 @@ export type Database = {
           year: number
         }
         Update: {
+          first_name?: string | null
           id?: string
+          last_name?: string | null
           predictions?: Json
           submitted_at?: string
           user_id?: string
