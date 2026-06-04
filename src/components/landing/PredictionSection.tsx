@@ -79,6 +79,10 @@ export function PredictionSection() {
       toast.error("Enter your BetKing User ID to predict");
       return;
     }
+    if (!validNames) {
+      toast.error("Enter your first and last name to predict");
+      return;
+    }
     setPicks((p) => ({ ...p, [matchId]: pick }));
   };
 
