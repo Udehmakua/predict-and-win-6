@@ -89,18 +89,18 @@ function SiteHeader() {
 function Hero() {
   return (
     <section id="top" className="relative isolate overflow-hidden bg-black">
+      {/* Desktop: image as cover background */}
       <img
         src={heroImage}
         alt=""
-        className="absolute inset-0 -z-10 h-full w-full object-contain sm:object-cover"
+        className="pointer-events-none absolute inset-0 -z-10 hidden h-full w-full object-cover sm:block"
       />
 
-
-      <div className="mx-auto max-w-6xl px-4 py-16 sm:py-24">
+      <div className="mx-auto max-w-6xl px-4 py-12 sm:py-24">
         <p className="font-[family-name:var(--font-subtle)] text-xs font-bold uppercase tracking-[0.3em] text-yellow">
           {"\u200B"}
         </p>
-        <h1 className="mt-3 font-display text-5xl font-black uppercase leading-[0.95] sm:text-7xl md:text-8xl">
+        <h1 className="mt-3 font-display text-4xl font-black uppercase leading-[0.95] sm:text-7xl md:text-8xl">
           Predict &amp; Win
           <br />
           <span className="text-yellow">₦10,000,000</span>
@@ -126,13 +126,20 @@ function Hero() {
           </a>
         </div>
 
-        {/* Inline countdown — replaces the old standalone Lock-In banner */}
+        {/* Inline countdown */}
         <div className="mt-8 inline-flex flex-col gap-2 rounded-xl border border-yellow/30 bg-black/60 px-5 py-4 backdrop-blur-sm">
           <span className="font-[family-name:var(--font-subtle)] text-[10px] font-bold uppercase tracking-[0.25em] text-yellow">
             Predictions close in
           </span>
           <Countdown target={WEEKLY_DEADLINE} />
         </div>
+
+        {/* Mobile-only: stacked image below CTAs */}
+        <img
+          src={heroImage}
+          alt="Predict and Win"
+          className="mt-8 block w-full rounded-xl sm:hidden"
+        />
 
         <div className="mt-10 grid max-w-2xl grid-cols-2 gap-3 sm:grid-cols-4">
           <StatCard k="₦10M" v="Weekly Pool" />
