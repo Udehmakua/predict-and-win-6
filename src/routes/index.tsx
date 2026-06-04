@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Toaster } from "sonner";
 import betkingLogo from "@/assets/betking-logo.svg";
 import heroImage from "@/assets/PREDICT AND WIN .jpg";
+import heroImageMobile from "@/assets/hero-mobile.png";
 import pay1 from "@/assets/pay-1.svg";
 import pay2 from "@/assets/pay-2.svg";
 import pay3 from "@/assets/pay-3.svg";
