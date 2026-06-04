@@ -13,6 +13,8 @@ const userIdSchema = z
 
 const submitSchema = z.object({
   userId: userIdSchema,
+  firstName: z.string().trim().min(1, "First name is required").max(50).regex(/^[A-Za-z][A-Za-z'\-\s]*$/, "Letters only"),
+  lastName: z.string().trim().min(1, "Last name is required").max(50).regex(/^[A-Za-z][A-Za-z'\-\s]*$/, "Letters only"),
   weekNumber: z.number().int().min(1).max(53),
   year: z.number().int().min(2024).max(2100),
   predictions: z
@@ -47,6 +49,8 @@ export const submitPredictions = createServerFn({ method: "POST" })
 
     const { error } = await supabaseAdmin.from("predictions").insert({
       user_id: data.userId,
+      first_name: data.firstName,
+      last_name: data.lastName,
       week_number: data.weekNumber,
       year: data.year,
       predictions: data.predictions,
