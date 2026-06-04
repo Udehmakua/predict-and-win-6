@@ -102,12 +102,15 @@ export function PredictionSection() {
 
   const handleSubmit = async () => {
     if (!validId) return toast.error(validityReason ?? "Enter a valid BetKing User ID");
+    if (!validNames) return toast.error("Enter your first and last name");
     if (!allPicked) return toast.error("Make a pick for every match");
     setSubmitting(true);
     try {
       const res = await submit({
         data: {
           userId,
+          firstName: firstName.trim(),
+          lastName: lastName.trim(),
           weekNumber: CURRENT_WEEK,
           year: CURRENT_YEAR,
           predictions: WEEKLY_MATCHES.map((m) => ({
