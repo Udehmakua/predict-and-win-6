@@ -147,8 +147,42 @@ export function PredictionSection() {
           <div className="h-px flex-1 bg-border" />
         </div>
 
+        {/* Name */}
+        <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <div className="rounded-xl border border-yellow/30 bg-card p-4">
+            <label htmlFor="fname" className="text-[10px] font-bold uppercase tracking-[0.2em] text-yellow">
+              First Name (required)
+            </label>
+            <input
+              id="fname"
+              type="text"
+              autoComplete="given-name"
+              maxLength={50}
+              placeholder="e.g. John"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              className="mt-2 w-full rounded-md border border-input bg-navy-deep px-3 py-2.5 text-foreground placeholder:text-muted-foreground/60 focus:border-yellow focus:outline-none"
+            />
+          </div>
+          <div className="rounded-xl border border-yellow/30 bg-card p-4">
+            <label htmlFor="lname" className="text-[10px] font-bold uppercase tracking-[0.2em] text-yellow">
+              Last Name (required)
+            </label>
+            <input
+              id="lname"
+              type="text"
+              autoComplete="family-name"
+              maxLength={50}
+              placeholder="e.g. Doe"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              className="mt-2 w-full rounded-md border border-input bg-navy-deep px-3 py-2.5 text-foreground placeholder:text-muted-foreground/60 focus:border-yellow focus:outline-none"
+            />
+          </div>
+        </div>
+
         {/* User ID */}
-        <div className="mt-6 rounded-xl border border-yellow/30 bg-card p-4">
+        <div className="mt-4 rounded-xl border border-yellow/30 bg-card p-4">
           <label htmlFor="bkid" className="text-[10px] font-bold uppercase tracking-[0.2em] text-yellow">
             BetKing User ID (required)
           </label>
