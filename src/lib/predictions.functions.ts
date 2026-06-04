@@ -49,6 +49,8 @@ export const submitPredictions = createServerFn({ method: "POST" })
 
     const { error } = await supabaseAdmin.from("predictions").insert({
       user_id: data.userId,
+      first_name: data.firstName,
+      last_name: data.lastName,
       week_number: data.weekNumber,
       year: data.year,
       predictions: data.predictions,
