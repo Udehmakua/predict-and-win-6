@@ -98,9 +98,9 @@ function Hero() {
       />
 
       <div className="mx-auto max-w-6xl px-4 py-8 sm:py-24">
-        {/* Mobile-only: image at top, centered and large */}
+        {/* Mobile-only: dedicated mobile hero image at top */}
         <img
-          src={heroImage}
+          src={heroImageMobile}
           alt="Predict and Win"
           className="mx-auto mb-8 block w-full max-w-md rounded-xl sm:hidden"
         />
