@@ -96,7 +96,14 @@ function Hero() {
         className="pointer-events-none absolute inset-0 -z-10 hidden h-full w-full object-cover sm:block"
       />
 
-      <div className="mx-auto max-w-6xl px-4 py-12 sm:py-24">
+      <div className="mx-auto max-w-6xl px-4 py-8 sm:py-24">
+        {/* Mobile-only: image at top, centered and large */}
+        <img
+          src={heroImage}
+          alt="Predict and Win"
+          className="mx-auto mb-8 block w-full max-w-md rounded-xl sm:hidden"
+        />
+
         <p className="font-[family-name:var(--font-subtle)] text-xs font-bold uppercase tracking-[0.3em] text-yellow">
           {"\u200B"}
         </p>
@@ -133,13 +140,6 @@ function Hero() {
           </span>
           <Countdown target={WEEKLY_DEADLINE} />
         </div>
-
-        {/* Mobile-only: stacked image below CTAs */}
-        <img
-          src={heroImage}
-          alt="Predict and Win"
-          className="mt-8 block w-full rounded-xl sm:hidden"
-        />
 
         <div className="mt-10 grid max-w-2xl grid-cols-2 gap-3 sm:grid-cols-4">
           <StatCard k="₦10M" v="Weekly Pool" />
