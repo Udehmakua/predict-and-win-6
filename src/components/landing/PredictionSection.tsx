@@ -43,6 +43,8 @@ export function PredictionSection() {
   const check = useServerFn(checkSubmission);
 
   const [userId, setUserId] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [picks, setPicks] = useState<Record<string, Outcome>>({});
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
