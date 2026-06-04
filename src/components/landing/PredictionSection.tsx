@@ -66,6 +66,10 @@ export function PredictionSection() {
   const validation = useMemo(() => validateBetkingUserId(userId), [userId]);
   const validId = validation.ok;
   const validityReason = validation.ok ? null : validation.reason;
+  const nameRegex = /^[A-Za-z][A-Za-z'\-\s]*$/;
+  const validFirstName = firstName.trim().length > 0 && nameRegex.test(firstName.trim());
+  const validLastName = lastName.trim().length > 0 && nameRegex.test(lastName.trim());
+  const validNames = validFirstName && validLastName;
   const allPicked = WEEKLY_MATCHES.every((m) => picks[m.id]);
   const madeCount = Object.keys(picks).length;
 
