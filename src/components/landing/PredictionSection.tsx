@@ -9,7 +9,7 @@ import {
 } from "@/lib/campaign-config";
 import { submitPredictions, checkSubmission } from "@/lib/predictions.functions";
 import { validateBetkingUserId } from "@/lib/user-id-validation";
-import { Trophy } from "lucide-react";
+import { WorldCupIcon } from "./WorldCupIcon";
 
 
 
@@ -249,13 +249,13 @@ export function PredictionSection() {
                     {/* Teams (stacked, BetKing style) */}
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2">
-                      <Trophy className="h-3.5 w-5 shrink-0 text-yellow" />
+                      <WorldCupIcon className="h-3.5 w-5 shrink-0 text-yellow" />
                         <span className="truncate text-sm font-semibold text-foreground">
                           {m.home}
                         </span>
                       </div>
                       <div className="mt-1 flex items-center gap-2">
-                        <Trophy className="h-3.5 w-5 shrink-0 text-yellow" />
+                        <WorldCupIcon className="h-3.5 w-5 shrink-0 text-yellow" />
                         <span className="truncate text-sm font-semibold text-foreground">
                           {m.away}
                         </span>
