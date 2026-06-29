@@ -2,16 +2,14 @@ import { useEffect, useMemo, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
 import {
-  WEEKLY_MATCHES,
+  WEEKLY_QUESTIONS,
   CURRENT_WEEK,
   CURRENT_YEAR,
-  type Outcome,
+  type Question,
 } from "@/lib/campaign-config";
 import { submitPredictions, checkSubmission } from "@/lib/predictions.functions";
 import { validateBetkingUserId } from "@/lib/user-id-validation";
 import { WorldCupIcon } from "./WorldCupIcon";
-
-
 
 const fmtTime = (iso: string) =>
   new Date(iso).toLocaleTimeString("en-GB", {
@@ -26,14 +24,14 @@ const fmtDayHeader = (iso: string) =>
     month: "short",
   });
 
-// Group matches by calendar day (BetKing-style date headers)
-function groupByDay<T extends { kickoff: string }>(matches: T[]) {
-  const groups: { label: string; items: T[] }[] = [];
-  for (const m of matches) {
-    const label = fmtDayHeader(m.kickoff);
+// Group questions by calendar day
+function groupByDay(questions: Question[]) {
+  const groups: { label: string; items: Question[] }[] = [];
+  for (const q of questions) {
+    const label = fmtDayHeader(q.kickoff);
     const last = groups[groups.length - 1];
-    if (last && last.label === label) last.items.push(m);
-    else groups.push({ label, items: [m] });
+    if (last && last.label === label) last.items.push(q);
+    else groups.push({ label, items: [q] });
   }
   return groups;
 }
@@ -45,20 +43,18 @@ export function PredictionSection() {
   const [userId, setUserId] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [picks, setPicks] = useState<Record<string, Outcome>>({});
+  const [answers, setAnswers] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [now, setNow] = useState(() => Date.now());
 
-  // Tick every second so the section auto-locks at the first kickoff.
   useEffect(() => {
     const id = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(id);
   }, []);
 
-  // First match kickoff — when this passes, the whole section locks.
   const firstKickoff = Math.min(
-    ...WEEKLY_MATCHES.map((m) => new Date(m.kickoff).getTime()),
+    ...WEEKLY_QUESTIONS.map((q) => new Date(q.kickoff).getTime()),
   );
   const kickedOff = now >= firstKickoff;
   const sectionLocked = submitted || kickedOff;
@@ -70,21 +66,24 @@ export function PredictionSection() {
   const validFirstName = firstName.trim().length > 0 && nameRegex.test(firstName.trim());
   const validLastName = lastName.trim().length > 0 && nameRegex.test(lastName.trim());
   const validNames = validFirstName && validLastName;
-  const allPicked = WEEKLY_MATCHES.every((m) => picks[m.id]);
-  const madeCount = Object.keys(picks).length;
+  const allAnswered = WEEKLY_QUESTIONS.every((q) => (answers[q.id] ?? "").trim().length > 0);
+  const madeCount = WEEKLY_QUESTIONS.filter((q) => (answers[q.id] ?? "").trim().length > 0).length;
 
-  const handlePick = (matchId: string, pick: Outcome, locked: boolean) => {
-    if (locked) return;
+  const guard = (locked: boolean) => {
+    if (locked) return false;
     if (!validId) {
       toast.error("Enter your BetKing User ID to predict");
-      return;
+      return false;
     }
     if (!validNames) {
       toast.error("Enter your first and last name to predict");
-      return;
+      return false;
     }
-    setPicks((p) => ({ ...p, [matchId]: pick }));
+    return true;
   };
+
+  const setAnswer = (qid: string, value: string) =>
+    setAnswers((a) => ({ ...a, [qid]: value }));
 
   useEffect(() => {
     if (!validId) {
@@ -103,7 +102,7 @@ export function PredictionSection() {
   const handleSubmit = async () => {
     if (!validId) return toast.error(validityReason ?? "Enter a valid BetKing User ID");
     if (!validNames) return toast.error("Enter your first and last name");
-    if (!allPicked) return toast.error("Make a pick for every match");
+    if (!allAnswered) return toast.error("Answer every question");
     setSubmitting(true);
     try {
       const res = await submit({
@@ -113,9 +112,12 @@ export function PredictionSection() {
           lastName: lastName.trim(),
           weekNumber: CURRENT_WEEK,
           year: CURRENT_YEAR,
-          predictions: WEEKLY_MATCHES.map((m) => ({
-            matchId: m.id,
-            pick: picks[m.id],
+          predictions: WEEKLY_QUESTIONS.map((q) => ({
+            questionId: q.id,
+            fixture: q.fixture,
+            question: q.text,
+            type: q.type,
+            answer: answers[q.id].trim(),
           })),
         },
       });
@@ -136,13 +138,13 @@ export function PredictionSection() {
   return (
     <section id="predict" className="scroll-mt-20 px-4 py-16 sm:py-20">
       <div className="mx-auto max-w-5xl">
-        <h2 className="font-display font-black uppercase leading-[0.95] text-4xl sm:text-6xl">
-          Make Your 5 Picks
+        <h2 className="font-display font-extrabold uppercase leading-[0.95] text-3xl sm:text-4xl">
+          Answer Your 5 Questions
         </h2>
 
         <div className="mt-3 flex items-center justify-between gap-4">
           <span className="text-sm text-muted-foreground">
-            {madeCount}/5 predictions made
+            {madeCount}/5 answered
           </span>
           <div className="h-px flex-1 bg-border" />
         </div>
@@ -204,85 +206,81 @@ export function PredictionSection() {
           )}
         </div>
 
-        {/* Matches — BetKing-style feed grouped by day */}
+        {/* Questions */}
         <div className="mt-6 overflow-hidden rounded-xl border border-border bg-card">
-          {groupByDay(WEEKLY_MATCHES).map((group) => (
+          {groupByDay(WEEKLY_QUESTIONS).map((group) => (
             <div key={group.label}>
-              {/* Day header */}
               <div className="flex items-center justify-between bg-secondary px-4 py-2.5">
                 <span className="font-[family-name:var(--font-subtle)] text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                   {group.label}
                 </span>
-                <div className="flex w-[150px] justify-around text-xs font-bold text-muted-foreground sm:w-[180px]">
-                  <span>1</span>
-                  <span>X</span>
-                  <span>2</span>
-                </div>
               </div>
 
-              {group.items.map((m) => {
+              {group.items.map((q) => {
                 const locked = sectionLocked;
-                const pick = picks[m.id];
+                const answer = answers[q.id] ?? "";
                 return (
                   <div
-                    key={m.id}
-                    className={`flex items-center gap-3 border-t border-border px-3 py-3 sm:px-4 ${
+                    key={q.id}
+                    className={`border-t border-border px-3 py-4 sm:px-4 ${
                       locked ? "opacity-60" : ""
                     }`}
                   >
-                    {/* Stats icon + time */}
-                    <div className="flex flex-col items-center gap-1 pr-1">
-                      <svg
-                        viewBox="0 0 16 16"
-                        className="size-4 text-yellow"
-                        fill="currentColor"
-                      >
-                        <rect x="1" y="9" width="3" height="6" />
-                        <rect x="6.5" y="5" width="3" height="10" />
-                        <rect x="12" y="1" width="3" height="14" />
-                      </svg>
-                      <span className="font-[family-name:var(--font-subtle)] text-[10px] font-semibold text-muted-foreground">
-                        {fmtTime(m.kickoff)}
-                      </span>
-                    </div>
-
-                    {/* Teams (stacked, BetKing style) */}
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center gap-2">
-                      <WorldCupIcon className="h-3.5 w-5 shrink-0 text-yellow" />
-                        <span className="truncate text-sm font-semibold text-foreground">
-                          {m.home}
-                        </span>
-                      </div>
-                      <div className="mt-1 flex items-center gap-2">
+                    <div className="flex items-start gap-3">
+                      <div className="flex flex-col items-center gap-1 pr-1 pt-1">
                         <WorldCupIcon className="h-3.5 w-5 shrink-0 text-yellow" />
-                        <span className="truncate text-sm font-semibold text-foreground">
-                          {m.away}
+                        <span className="font-[family-name:var(--font-subtle)] text-[10px] font-semibold text-muted-foreground">
+                          {fmtTime(q.kickoff)}
                         </span>
                       </div>
-                    </div>
 
-                    {/* 1 / X / 2 buttons */}
-                    <div className="flex w-[150px] shrink-0 gap-1.5 sm:w-[180px]">
-                      {(["HOME", "DRAW", "AWAY"] as Outcome[]).map((v) => {
-                        const active = pick === v;
-                        const label = v === "HOME" ? "1" : v === "DRAW" ? "X" : "2";
-                        return (
-                          <button
-                            key={v}
-                            type="button"
+                      <div className="min-w-0 flex-1">
+                        <p className="text-xs font-bold uppercase tracking-wide text-yellow">
+                          {q.fixture}
+                        </p>
+                        <p className="mt-1 text-sm font-semibold text-foreground">
+                          {q.text}
+                        </p>
+
+                        {q.type === "YES_NO" ? (
+                          <div className="mt-3 flex gap-2">
+                            {(["Yes", "No"] as const).map((v) => {
+                              const active = answer === v;
+                              return (
+                                <button
+                                  key={v}
+                                  type="button"
+                                  disabled={locked}
+                                  onClick={() => {
+                                    if (!guard(locked)) return;
+                                    setAnswer(q.id, v);
+                                  }}
+                                  className={`min-w-[80px] rounded-md py-2.5 px-4 text-sm font-bold transition-colors ${
+                                    active
+                                      ? "bg-yellow text-primary-foreground"
+                                      : "bg-secondary text-foreground hover:bg-yellow/20"
+                                  } ${locked ? "cursor-not-allowed" : "cursor-pointer"}`}
+                                >
+                                  {v}
+                                </button>
+                              );
+                            })}
+                          </div>
+                        ) : (
+                          <input
+                            type="text"
                             disabled={locked}
-                            onClick={() => handlePick(m.id, v, locked)}
-                            className={`flex-1 rounded-md py-2.5 text-center text-sm font-bold transition-colors ${
-                              active
-                                ? "bg-yellow text-primary-foreground"
-                                : "bg-secondary text-foreground hover:bg-yellow/20"
-                            } ${locked ? "cursor-not-allowed" : "cursor-pointer"}`}
-                          >
-                            {label}
-                          </button>
-                        );
-                      })}
+                            maxLength={100}
+                            placeholder="Type your answer"
+                            value={answer}
+                            onChange={(e) => {
+                              if (!guard(locked)) return;
+                              setAnswer(q.id, e.target.value);
+                            }}
+                            className="mt-3 w-full rounded-md border border-input bg-navy-deep px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/60 focus:border-yellow focus:outline-none disabled:cursor-not-allowed"
+                          />
+                        )}
+                      </div>
                     </div>
                   </div>
                 );
@@ -291,13 +289,12 @@ export function PredictionSection() {
           ))}
         </div>
 
-
         {/* Submit */}
         <div className="mt-8 flex flex-col items-center gap-3">
           <button
             type="button"
             onClick={handleSubmit}
-            disabled={submitting || sectionLocked || !validId || !validNames || !allPicked}
+            disabled={submitting || sectionLocked || !validId || !validNames || !allAnswered}
             className="w-full max-w-md rounded-md bg-yellow px-8 py-4 font-display text-base font-extrabold uppercase tracking-wide text-primary-foreground transition-transform hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
           >
             {submitting
