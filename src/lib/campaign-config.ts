@@ -19,7 +19,7 @@
 
 export const PREDICTIONS_ENABLED = true;
 
-export const CURRENT_WEEK = 4;
+export const CURRENT_WEEK = 3;
 export const CURRENT_YEAR = 2026;
 
 export type Outcome = "HOME" | "DRAW" | "AWAY";
