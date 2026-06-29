@@ -20,8 +20,11 @@ const submitSchema = z.object({
   predictions: z
     .array(
       z.object({
-        matchId: z.string().min(1).max(50),
-        pick: z.enum(["HOME", "DRAW", "AWAY"]),
+        questionId: z.string().min(1).max(50),
+        fixture: z.string().min(1).max(120),
+        question: z.string().min(1).max(300),
+        type: z.enum(["YES_NO", "SHORT_TEXT"]),
+        answer: z.string().trim().min(1, "Answer required").max(100),
       }),
     )
     .min(1)
